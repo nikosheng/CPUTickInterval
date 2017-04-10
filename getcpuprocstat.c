@@ -61,6 +61,6 @@ void getstat(jiff *restrict cuse, jiff *restrict cice, jiff *restrict csys, jiff
     	sscanf(b,  "cpu  %Lu %Lu %Lu %Lu %Lu %Lu %Lu %Lu", cuse, cice, csys, cide, ciow, cxxx, cyyy, czzz);
 
     fprintf(stdout, "us: %Lu", *cuse);
-    usleep(100);
+    usleep(1000 * 30);
 }
 
