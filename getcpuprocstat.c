@@ -29,10 +29,14 @@ int main(int argc, char **argv){
     jiff  cxxx;
     jiff  cyyy;
     jiff  czzz;
-    char *core = argv[1];
+    
 
-    if(core == NULL)
-    	core = "0";
+    if(argc < 2){
+    	printf("Usage: cpuinfo <core_num>\n");
+    	exit(1);
+    }
+
+    char* core = argv[1];
 
     getstat(core,
 		&cuse,
@@ -76,11 +80,12 @@ void getstat(char* core,
 
 	    read(fd, buff, BUFFSIZE - 1);
 
-	    b = strstr(buff, prefix);
-	    *ciow = 0;  /* not separated out until the 2.5.41 kernel */
-	  	*cxxx = 0;  /* not separated out until the 2.6.0-test4 kernel */
-	  	*cyyy = 0;  /* not separated out until the 2.6.0-test4 kernel */
-	  	*czzz = 0;  /* not separated out until the 2.6.11 kernel */
+	    // *ciow = 0;  /* not separated out until the 2.5.41 kernel */
+	  	// *cxxx = 0;  /* not separated out until the 2.6.0-test4 kernel */
+	  	// *cyyy = 0;  /* not separated out until the 2.6.0-test4 kernel */
+	  	// *czzz = 0;  /* not separated out until the 2.6.11 kernel */
+	  	
+	  	b = strstr(buff, prefix);
 	    if(b){
 	    	sscanf(b,  "cpu%s  %Lu", core, cuse);
 	    	// sscanf(b,  "cpu  %Lu %Lu %Lu %Lu %Lu %Lu %Lu %Lu", cuse, cice, csys, cide, ciow, cxxx, cyyy, czzz);
