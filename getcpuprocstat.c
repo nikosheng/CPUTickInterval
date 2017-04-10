@@ -11,38 +11,38 @@ typedef unsigned long long jiff;
 
 void getstat(jiff *__restrict cuse, jiff *__restrict cice, jiff *__restrict csys, jiff *__restrict cide, jiff *__restrict ciow, jiff *__restrict cxxx, jiff *__restrict cyyy, jiff *__restrict czzz);
 
+
 int main(){
 
+    while(1){
+	    jiff  cuse;
+	    jiff  cice;
+	    jiff  csys;
+	    jiff  cide;
+	    jiff  ciow;
+	    jiff  cxxx;
+	    jiff  cyyy;
+	    jiff  czzz;
 
-	while(1){
-		jiff  cuse;
-		jiff  cice;
-		jiff  csys;
-		jiff  cide;
-		jiff  ciow;
-		jiff  cxxx;
-		jiff  cyyy;
-		jiff  czzz;
-
-		getstat(&cuse, 
-			    &cice, 
-			    &csys,
-			    &cide,
-			    &ciow,
-			    &cxxx,
-			    &cyyy,
-			    &czzz);
-	}
+	    getstat(&cuse,
+	                &cice,
+	                &csys,
+	                &cide,
+	                &ciow,
+	                &cxxx,
+	                &cyyy,
+	                &czzz);
+    }
 }
 
 
 void getstat(jiff *restrict cuse, jiff *restrict cice, jiff *restrict csys, jiff *restrict cide, jiff *restrict ciow, jiff *restrict cxxx, jiff *restrict cyyy, jiff *restrict czzz)
 {
 
-	static int fd;
-	static char buff[BUFFSIZE];
-	buff[BUFFSIZE-1] = 0;
-	char* b;
+    static int fd;
+    static char buff[BUFFSIZE];
+    buff[BUFFSIZE-1] = 0;
+    char* b;
 
   	if(fd){
     	lseek(fd, 0L, SEEK_SET);
@@ -51,10 +51,9 @@ void getstat(jiff *restrict cuse, jiff *restrict cice, jiff *restrict csys, jiff
     	if(fd == -1) printf("/proc/stat");
   	}
 
-	read(fd,buff,BUFFSIZE-1);
-
-	b = strstr(buff, "cpu ");
-	*ciow = 0;  /* not separated out until the 2.5.41 kernel */
+    read(fd,buff,BUFFSIZE-1);
+    b = strstr(buff, "cpu ");
+    *ciow = 0;  /* not separated out until the 2.5.41 kernel */
   	*cxxx = 0;  /* not separated out until the 2.6.0-test4 kernel */
   	*cyyy = 0;  /* not separated out until the 2.6.0-test4 kernel */
   	*czzz = 0;  /* not separated out until the 2.6.11 kernel */
@@ -62,5 +61,6 @@ void getstat(jiff *restrict cuse, jiff *restrict cice, jiff *restrict csys, jiff
     	sscanf(b,  "cpu  %Lu %Lu %Lu %Lu %Lu %Lu %Lu %Lu", cuse, cice, csys, cide, ciow, cxxx, cyyy, czzz);
 
     fprintf(stdout, "us: %Lu", *cuse);
-    usleep(1000 * 30);
+    usleep(100);
 }
+
